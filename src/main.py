@@ -13,13 +13,12 @@ app.mount("/sly", sly.app.fastapi.create())
 templates = sly.app.fastapi.Jinja2Templates(directory="templates")
 # sly.app.fastapi.enable_hot_reload_on_debug(app)
 
+from supervisely.app.widgets import ElementButton, SlyTqdm
+
+progress = SlyTqdm(message="My progress")
+button = ElementButton(text="Start")
+
 
 @app.get("/")
-@available_after_shutdown(app=app)
 async def read_index(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
-
-
-@g.app.on_event("shutdown")
-def shutdown():
-    read_index()  # save last version of static files
