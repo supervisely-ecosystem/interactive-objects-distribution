@@ -4,8 +4,6 @@ import supervisely as sly
 from fastapi import FastAPI, Request, Depends
 
 
-# app_root_dir = os.getcwd()  # app sources directory (working directory)
-
 app = FastAPI()
 sly_app = sly.app.fastapi.create()
 app.mount("/sly", sly_app)
