@@ -11,13 +11,12 @@ from supervisely.app.fastapi import available_after_shutdown
 # method arguments (btn click) - state, context - hide
 # question - notification box DataJson()[self.widget_id]['title'] = self._title, remove widget_id???
 # head -> title в index.html ставить автоматом
-# for convenient debug, has no effect in production
 # storage_image_url - server address join using flag
-# app_mode -> "running_on": "Supervisely", or "localhost"
 # available_after_shutdown hiddend - auto in init
 # altair visualizations
 # "GET /app/widgets/sly_tqdm/style.css HTTP/1.1" 304 Not Modified
 
+# for convenient debug, has no effect in production
 load_dotenv("local.env")
 load_dotenv(os.path.expanduser("~/supervisely.env"))
 
