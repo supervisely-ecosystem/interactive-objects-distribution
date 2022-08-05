@@ -1,0 +1,12 @@
+<h1>Get started</h1>
+<h3 style="max-width: 500px; color: gray">
+  Develop your Supervisely Apps using the full power of Visual Studio Code,
+  including the editor, terminal, debugger, version control, and the entire
+  ecosystem of extensions. Work in the browser on any computer connected to
+  Supervisely Platform.
+</h3>
+<sly-stepper :active="state.activeStep">
+  <sly-stepper-item> {% include 'card_general.html' %} </sly-stepper-item>
+  <sly-stepper-item> {% include 'card_app_template.html' %} </sly-stepper-item>
+  <sly-stepper-item> {% include 'github_integration.html' %} </sly-stepper-item>
+</sly-stepper>
