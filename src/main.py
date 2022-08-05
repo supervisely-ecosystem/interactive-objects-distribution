@@ -12,10 +12,6 @@ load_dotenv(os.path.expanduser("~/supervisely.env"))
 app = FastAPI()
 sly.app.fastapi.init(app)
 
-# app.mount("/sly", sly.app.fastapi.create())
-# templates = sly.app.fastapi.Jinja2Templates(directory="templates")
-# sly.app.fastapi.enable_hot_reload_on_debug(app)
-
 from supervisely.app.widgets import ElementButton, SlyTqdm
 
 progress = SlyTqdm(message="My progress")
