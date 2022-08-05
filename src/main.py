@@ -9,11 +9,7 @@ from supervisely.app.fastapi import available_after_shutdown
 # "GET /app/widgets/element_button/style.css HTTP/1.1" 304 Not Modified
 # "GET /app/widgets/sly_tqdm/style.css HTTP/1.1" 304 Not Modified
 # index.html - hide
-# app = sly.app.fastapi.init()
-# @button.click(app) -> @button.click()
-# hide widgets init app object somewhere inside - app singletone
 # method arguments (btn click) - state, context - hide
-# api - one time init (session owner, !!!session user!!)
 # question - notification box DataJson()[self.widget_id]['title'] = self._title, remove widget_id???
 # head -> title в index.html ставить автоматом
 # версии JS скриптов в index.html - суем в SDK внутрь - привязываемся к версии pySDK
