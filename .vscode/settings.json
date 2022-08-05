@@ -1,10 +1,8 @@
 {
-  "python.pythonPath": "venv/bin/python",
-  "python.defaultInterpreterPath": "venv/bin/python",
+  "python.defaultInterpreterPath": ".venv/bin/python",
   "files.exclude": {
     "**/__pycache__": true,
     ".venv": true,
-    "venv": true
   },
   "editor.formatOnSave": true,
   "editor.formatOnPaste": true,
@@ -15,8 +13,5 @@
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "python.formatting.provider": "black",
-  "env": {
-    "PYTHONPATH": "${workspaceFolder}:${PYTHONPATH}"
-  }
+  "python.formatting.provider": "black"
 }
