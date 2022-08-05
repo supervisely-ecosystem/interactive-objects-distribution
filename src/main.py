@@ -5,8 +5,7 @@ from fastapi import FastAPI, Request, Depends
 
 
 app = FastAPI()
-sly_app = sly.app.fastapi.create()
-app.mount("/sly", sly_app)
+app.mount("/sly", sly.app.fastapi.create())
 templates = sly.app.fastapi.Jinja2Templates(directory="templates")
 # sly.app.fastapi.enable_hot_reload_on_debug(app)
 
