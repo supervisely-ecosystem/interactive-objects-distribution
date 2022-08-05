@@ -20,6 +20,7 @@ from supervisely.app.fastapi import available_after_shutdown
 # Jinja2Templates - прячем
 # storage_image_url - server address join using flag
 # app_mode -> "running_on": "Supervisely", or "localhost"
+# available_after_shutdown hiddend - auto in init
 
 load_dotenv("local.env")
 load_dotenv(os.path.expanduser("~/supervisely.env"))
