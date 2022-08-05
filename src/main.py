@@ -2,12 +2,13 @@ import os
 from dotenv import load_dotenv
 import supervisely as sly
 import time
+
 from fastapi import FastAPI, Request, Depends
 from supervisely.app.fastapi import available_after_shutdown
 
+# "GET /app/widgets/element_button/style.css HTTP/1.1" 304 Not Modified
+# "GET /app/widgets/sly_tqdm/style.css HTTP/1.1" 304 Not Modified
 # index.html - hide
-# app.get("/") - hide
-# app = FastAPI() - remove
 # app = sly.app.fastapi.init()
 # @button.click(app) -> @button.click()
 # hide widgets init app object somewhere inside - app singletone
@@ -23,25 +24,17 @@ from supervisely.app.fastapi import available_after_shutdown
 # available_after_shutdown hiddend - auto in init
 # altair visualizations
 # create venv echo "Testing imports..." -> python -c "import supervisely as sly"
+# "GET /app/widgets/sly_tqdm/style.css HTTP/1.1" 304 Not Modified
 
 load_dotenv("local.env")
 load_dotenv(os.path.expanduser("~/supervisely.env"))
 
-app = FastAPI()
-sly.app.fastapi.init(app)
-
+app = sly.Application(templates_dir="templates")
 progress = sly.app.widgets.SlyTqdm()
 button = sly.app.widgets.ElementButton(text="Start")
 
 
-@app.get("/")
-async def read_index(request: Request):
-    return sly.app.fastapi.Jinja2Templates().TemplateResponse(
-        "index.html", {"request": request}
-    )
-
-
-@button.click(app)
+@button.click()
 def count(
     state: sly.app.StateJson = Depends(sly.app.StateJson.from_request),
 ):
