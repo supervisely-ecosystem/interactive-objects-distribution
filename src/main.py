@@ -8,7 +8,6 @@ from supervisely.app.fastapi import available_after_shutdown
 
 # "GET /app/widgets/element_button/style.css HTTP/1.1" 304 Not Modified
 # "GET /app/widgets/sly_tqdm/style.css HTTP/1.1" 304 Not Modified
-# index.html - hide
 # method arguments (btn click) - state, context - hide
 # question - notification box DataJson()[self.widget_id]['title'] = self._title, remove widget_id???
 # head -> title в index.html ставить автоматом
@@ -25,7 +24,7 @@ from supervisely.app.fastapi import available_after_shutdown
 load_dotenv("local.env")
 load_dotenv(os.path.expanduser("~/supervisely.env"))
 
-app = sly.Application(templates_dir="templates")
+app = sly.Application()
 progress = sly.app.widgets.SlyTqdm()
 button = sly.app.widgets.ElementButton(text="Start")
 
