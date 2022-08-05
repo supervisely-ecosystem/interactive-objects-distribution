@@ -14,7 +14,7 @@ sly.app.fastapi.init(app)
 
 from supervisely.app.widgets import ElementButton, SlyTqdm
 
-progress = SlyTqdm(message="My progress")
+progress = SlyTqdm(message="Some processing")
 button = ElementButton(text="Start")
 
 
