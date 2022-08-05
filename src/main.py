@@ -11,14 +11,11 @@ from supervisely.app.fastapi import available_after_shutdown
 # method arguments (btn click) - state, context - hide
 # question - notification box DataJson()[self.widget_id]['title'] = self._title, remove widget_id???
 # head -> title в index.html ставить автоматом
-# версии JS скриптов в index.html - суем в SDK внутрь - привязываемся к версии pySDK
 # for convenient debug, has no effect in production
-# Jinja2Templates - прячем
 # storage_image_url - server address join using flag
 # app_mode -> "running_on": "Supervisely", or "localhost"
 # available_after_shutdown hiddend - auto in init
 # altair visualizations
-# create venv echo "Testing imports..." -> python -c "import supervisely as sly"
 # "GET /app/widgets/sly_tqdm/style.css HTTP/1.1" 304 Not Modified
 
 load_dotenv("local.env")
