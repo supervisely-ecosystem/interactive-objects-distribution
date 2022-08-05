@@ -22,6 +22,7 @@ from supervisely.app.fastapi import available_after_shutdown
 # app_mode -> "running_on": "Supervisely", or "localhost"
 # available_after_shutdown hiddend - auto in init
 # altair visualizations
+# create venv echo "Testing imports..." -> python -c "import supervisely as sly"
 
 load_dotenv("local.env")
 load_dotenv(os.path.expanduser("~/supervisely.env"))
