@@ -1,2 +1,3 @@
 supervisely==6.51.2
 black
+plotly==5.9.0
