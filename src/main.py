@@ -9,7 +9,6 @@ from supervisely.app.fastapi import available_after_shutdown
 # storage_image_url - server address join using flag
 # available_after_shutdown hiddend - auto in init
 # altair visualizations
-# button - loading on click
 # SlyTqdm -> progress / TQDM???
 
 # for convenient debug, has no effect in production
