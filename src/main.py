@@ -10,6 +10,7 @@ from supervisely.app.fastapi import available_after_shutdown
 # available_after_shutdown hiddend - auto in init
 # altair visualizations
 # SlyTqdm -> progress / TQDM???
+# sly.timeit не работает
 
 # for convenient debug, has no effect in production
 load_dotenv("local.env")
