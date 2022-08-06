@@ -17,9 +17,6 @@ app = sly.Application()
 progress = sly.app.widgets.Progress()
 button = sly.app.widgets.Button(text="Start", icon="zmdi zmdi-play")
 
-api = sly.Api()
-api = sly.Api.from_env()
-
 
 @button.click
 def count():
