@@ -6,12 +6,10 @@ import time
 from fastapi import FastAPI, Request, Depends
 from supervisely.app.fastapi import available_after_shutdown
 
-# sly.logger.debug("XXX") doesnt work
 # storage_image_url - server address join using flag
 # available_after_shutdown hiddend - auto in init
 # altair visualizations
 # SlyTqdm -> progress / TQDM???
-# sly.timeit не работает
 
 # for convenient debug, has no effect in production
 load_dotenv("local.env")
