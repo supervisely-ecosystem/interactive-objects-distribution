@@ -9,6 +9,8 @@ from supervisely.app.fastapi import available_after_shutdown
 # storage_image_url - server address join using flag
 # available_after_shutdown hiddend - auto in init
 # altair visualizations
+# button - loading on click
+# SlyTqdm -> progress / TQDM???
 
 # for convenient debug, has no effect in production
 load_dotenv("local.env")
@@ -16,13 +18,11 @@ load_dotenv(os.path.expanduser("~/supervisely.env"))
 
 app = sly.Application()
 progress = sly.app.widgets.SlyTqdm()
-button = sly.app.widgets.ElementButton(text="Start")
+button = sly.app.widgets.Button(text="Start", icon="zmdi zmdi-play")
 
 
-@button.click()
-def count(
-    state: sly.app.StateJson = Depends(sly.app.StateJson.from_request),
-):
+@button.click
+def count(state: sly.app.StateJson = Depends(sly.app.StateJson.from_request)):
     total = 100
     with progress(message="Some processing...", total=total) as pbar:
         for i in range(total):
