@@ -27,7 +27,6 @@ button = sly.app.widgets.Button(text="Start", icon="zmdi zmdi-play")
 
 df = px.data.stocks()
 fig = px.line(df, x="date", y="GOOG")
-
 data = sly.app.DataJson()
 data["chart"] = json.loads(fig.to_json())
 
