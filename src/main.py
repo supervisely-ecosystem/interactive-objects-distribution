@@ -6,6 +6,7 @@ import time
 from fastapi import FastAPI, Request, Depends
 from supervisely.app.fastapi import available_after_shutdown
 
+# sly.logger.debug("XXX") doesnt work
 # storage_image_url - server address join using flag
 # available_after_shutdown hiddend - auto in init
 # altair visualizations
@@ -22,7 +23,7 @@ button = sly.app.widgets.Button(text="Start", icon="zmdi zmdi-play")
 
 
 @button.click
-def count(state: sly.app.StateJson = Depends(sly.app.StateJson.from_request)):
+def count():
     total = 100
     with progress(message="Some processing...", total=total) as pbar:
         for i in range(total):
