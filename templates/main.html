@@ -2,4 +2,8 @@
 <div>{{{ progress.to_html() }}}</div>
 <div class="mt10">{{{ button.to_html() }}}</div>
 
-<sly-plotly :content="data.chart"></sly-plotly>
+<!-- <sly-plotly :content="data.chart"></sly-plotly> -->
+<sly-line-chart
+  :options.sync="data.example2.options"
+  :content="data.example2.series"
+></sly-line-chart>
