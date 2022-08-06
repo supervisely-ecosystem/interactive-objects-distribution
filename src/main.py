@@ -24,7 +24,7 @@ button = sly.app.widgets.Button(text="Start", icon="zmdi zmdi-play")
 
 @button.click
 def count():
-    total = 100
+    total = 50
     with progress(message="Some processing...", total=total) as pbar:
         for i in range(total):
             time.sleep(0.1)
