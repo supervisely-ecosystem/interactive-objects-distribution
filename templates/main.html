@@ -3,7 +3,9 @@
 <div class="mt10">{{{ button.to_html() }}}</div>
 
 <!-- <sly-plotly :content="data.chart"></sly-plotly> -->
+<div>{{state.abc}}</div>
 <sly-line-chart
   :options.sync="data.example2.options"
   :content="data.example2.series"
+  @click="state.abc = $event;"
 ></sly-line-chart>

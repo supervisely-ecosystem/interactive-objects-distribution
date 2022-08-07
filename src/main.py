@@ -9,14 +9,19 @@ import plotly.express as px
 # from supervisely.app.fastapi import available_after_shutdown
 
 
+# post method not found modal window
 # storage_image_url - server address join using flag
 # available_after_shutdown hiddend - auto in init
 # altair visualizations
 # api inti print exception + link to documentation
+# put point after click?
+# apex chart - broken after zoom
 
 # for convenient debug, has no effect in production
 load_dotenv("local.env")
 load_dotenv(os.path.expanduser("~/supervisely.env"))
+
+sly.app.StateJson()["abc"] = {}
 
 app = sly.Application()
 progress = sly.app.widgets.Progress()
@@ -48,7 +53,21 @@ x = {
                     [8, 80],
                     [9, 90],
                 ],
-            }
+            },
+            {
+                "name": "Line 2",
+                "data": [
+                    [1, 10 + 5],
+                    [2, 20 + 5],
+                    [3, 30 + 5],
+                    [4, 40 + 5],
+                    [5, 50 + 5],
+                    [6, 60 + 5],
+                    [7, 70 + 5],
+                    [8, 80 + 5],
+                    [9, 90 + 5],
+                ],
+            },
         ],
     }
 }
