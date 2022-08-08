@@ -8,7 +8,6 @@ import numpy as np
 # from supervisely.app.fastapi import available_after_shutdown
 # available_after_shutdown hiddend - auto in init
 
-
 # for convenient debug, has no effect in production
 load_dotenv("local.env")
 load_dotenv(os.path.expanduser("~/supervisely.env"))
