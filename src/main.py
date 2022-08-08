@@ -4,12 +4,16 @@ import supervisely as sly
 import time
 import numpy as np
 import pandas as pd
+import random
 
 from supervisely.app.content import DataJson, StateJson
 
 # TODO:
 # from supervisely.app.fastapi import available_after_shutdown
 # available_after_shutdown hiddend - auto in init
+# table per page change default
+# widgets clicks if-else
+# jinja vscode
 
 # for convenient debug, has no effect in production
 load_dotenv("local.env")
@@ -28,40 +32,34 @@ button = sly.app.widgets.Button(text="Start", icon="zmdi zmdi-play")
 chart = sly.app.widgets.LineChart(title="Max vs Denis", xaxis_type="category")
 
 
-data = {"calories": [420, 380, 390], "duration": [50, 40, 45]}
-# load data into a DataFrame object:
-df = pd.DataFrame(data)
+iris = pd.read_csv(
+    "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv"
+)
+table = sly.app.widgets.Table(data=iris, fixed_cols=2)
 
 
-table = sly.app.widgets.ClassicTable(data=df)
-
-
-@chart.click
+# @chart.click
 def refresh_images_table(datapoint: sly.app.widgets.LineChart.ClickedDataPoint):
-    print(f"User clicked {datapoint.series_name}, x = {datapoint.x}, y = {datapoint.y}")
+    print(f"Line: {datapoint.series_name}")
+    print(f"x = {datapoint.x}")
+    print(f"y = {datapoint.y}")
 
 
 @button.click
 def calculate_stats():
-    total = 20
-    with progress(message="Generating first chart...", total=total) as pbar:
-        for i in range(total):
-            time.sleep(0.1)
-            pbar.update(1)
+    for name in ["maxim", "denis"]:
+        total = 20
+        with progress(message=f"Generating '{name}' chart...", total=total) as pbar:
+            for i in range(total):
+                time.sleep(0.1)
+                pbar.update(1)
+        x, y = generate_random_chart(random.randint(15, 30))
+        chart.add_series(name, x, y)
 
-    name = "Max"
-    x, y = generate_random_chart(15)
-    chart.add_series(name, x, y)
 
-    total = 30
-    with progress(message="Generating second chart...", total=total) as pbar:
-        for i in range(total):
-            time.sleep(0.1)
-            pbar.update(1)
-
-    name = "Denis"
-    x, y = generate_random_chart(40)
-    chart.add_series(name, x, y)
+@table.click
+def show_image(selcted_row):
+    print(f"-->>>!!! {selcted_row}")
 
 
 def generate_random_chart(n=30):
