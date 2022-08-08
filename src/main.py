@@ -3,6 +3,9 @@ from dotenv import load_dotenv
 import supervisely as sly
 import time
 import numpy as np
+import pandas as pd
+
+from supervisely.app.content import DataJson, StateJson
 
 # TODO:
 # from supervisely.app.fastapi import available_after_shutdown
@@ -23,6 +26,14 @@ project_info = sly.app.widgets.ProjectThumbnail(project)
 progress = sly.app.widgets.Progress()
 button = sly.app.widgets.Button(text="Start", icon="zmdi zmdi-play")
 chart = sly.app.widgets.LineChart(title="Max vs Denis", xaxis_type="category")
+
+
+data = {"calories": [420, 380, 390], "duration": [50, 40, 45]}
+# load data into a DataFrame object:
+df = pd.DataFrame(data)
+
+
+table = sly.app.widgets.ClassicTable(data=df)
 
 
 @chart.click

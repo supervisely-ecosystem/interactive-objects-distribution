@@ -3,7 +3,11 @@
   subtitle="All labels will be used in stats"
   style="margin-bottom: 15px"
 >
-  <div>{{{ project_info.to_html() }}}</div>
+  <div>{{{ project_info }}}</div>
+</sly-card>
+
+<sly-card title="Table" subtitle="description" style="margin-bottom: 15px">
+  <div>{{{ table }}}</div>
 </sly-card>
 
 <sly-card
@@ -11,9 +15,9 @@
   subtitle="Click on chart to preview corresponding images"
   style="margin-bottom: 10px"
 >
-  <div>{{{ progress.to_html() }}}</div>
-  <div style="margin-top: 10px">{{{ button.to_html() }}}</div>
-  <div style="margin-top: 10px">{{{ chart.to_html() }}}</div>
+  <div>{{{ progress }}}</div>
+  <div style="margin-top: 10px">{{{ button }}}</div>
+  <div style="margin-top: 10px">{{{ chart }}}</div>
   <div>123</div>
   <div>{{state.chart.clicked_value}}</div>
 </sly-card>
