@@ -1,8 +1,21 @@
-<sly-card title="Input project" subtitle="Card description">
+<sly-card
+  title="Input project"
+  subtitle="All labels will be used in stats"
+  style="margin-bottom: 15px"
+>
   <div>{{{ project_info.to_html() }}}</div>
 </sly-card>
 
-<h1>Tests</h1>
+<sly-card
+  title="Interactive chart"
+  subtitle="Click on chart to preview corresponding images"
+  style="margin-bottom: 10px"
+>
+  <div>{{{ progress.to_html() }}}</div>
+  <div class="mt10">{{{ button.to_html() }}}</div>
+</sly-card>
+
+<!-- <h1>Tests</h1>
 <div>{{{ progress.to_html() }}}</div>
 <div class="mt10">{{{ button.to_html() }}}</div>
 
@@ -33,14 +46,4 @@
   />
 </div>
 <div>Maxim</div>
-<div>{{data.output2}}</div>
-<!-- @click="qqq" -->
-<!--  -->
-<!-- <apexchart type="line" height="350" :options="chartOptions" :series="series"></apexchart> -->
-<!-- 
-<sly-apex-chart
-      :options="example1.options"
-      :series="example1.series"
-      type="line"
-      @click="qqq"
-    /> -->
+<div>{{data.output2}}</div> -->
