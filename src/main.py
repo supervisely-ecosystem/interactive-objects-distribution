@@ -16,11 +16,21 @@ import pandas as pd
 load_dotenv("local.env")
 load_dotenv(os.path.expanduser("~/supervisely.env"))
 
+
+project_id = int(os.environ["modal.state.slyProjectId"])
+api = sly.Api()
+project = api.project.get_info_by_id(project_id)
+print(project)
+print(project.reference_image_url)
+print(project.image_preview_url)
+
 sly.app.StateJson()["abc"] = {}
 
 app = sly.Application()
 progress = sly.app.widgets.Progress()
 button = sly.app.widgets.Button(text="Start", icon="zmdi zmdi-play")
+project_info = sly.app.widgets.ProjectThumbnail(project)
+
 
 import json
 
