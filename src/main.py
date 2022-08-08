@@ -4,12 +4,10 @@ import supervisely as sly
 import time
 import numpy as np
 
+# TODO:
 # from supervisely.app.fastapi import available_after_shutdown
-# post method not found modal window
-# storage_image_url - server address join using flag
 # available_after_shutdown hiddend - auto in init
-# put point after click?
-# add_event_handler - maybe remove?
+
 
 # for convenient debug, has no effect in production
 load_dotenv("local.env")
