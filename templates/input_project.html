@@ -1,0 +1,11 @@
+<sly-card title="Input Data">
+    <sly-field title=""
+               description=""
+               style="margin-bottom: 0">
+        <sly-field title="" description="Selected Project">
+            <a slot="title" target="_blank"
+            :href="`/projects/${data.project_id}/datasets`">{{data.project_name}}</a>
+            <sly-icon slot="icon" :options="{ imageUrl: `${data.project_preview_url}` }"/>
+        </sly-field>
+    </sly-field>
+</sly-card>
