@@ -14,6 +14,7 @@ from supervisely.app.content import StateJson
 # storage_image_url - server address join using flag
 # available_after_shutdown hiddend - auto in init
 # put point after click?
+# add_event_handler - maybe remove?
 
 # for convenient debug, has no effect in production
 load_dotenv("local.env")
@@ -48,9 +49,8 @@ chart = sly.app.widgets.LineChart(
 
 
 @chart.click
-def refresh_images_table(serie_index, datapoint_index):
-    print("---> ", serie_index, datapoint_index)
-    print("refresh_images_table")
+def refresh_images_table(datapoint: sly.app.widgets.LineChart.ClickedDataPoint):
+    print(f"User clicked {datapoint.series_name}, x = {datapoint.x}, y = {datapoint.y}")
 
 
 @button.click
