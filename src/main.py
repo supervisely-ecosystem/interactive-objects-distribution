@@ -6,6 +6,8 @@ import json
 import pandas as pd
 import numpy as np
 
+from supervisely.app.content import StateJson
+
 # from supervisely.app.fastapi import available_after_shutdown
 # post method not found modal window
 # apex chart - broken after zoom
@@ -28,9 +30,6 @@ progress = sly.app.widgets.Progress()
 button = sly.app.widgets.Button(text="Start", icon="zmdi zmdi-play")
 
 
-data = sly.app.DataJson()
-data["output1"] = {"a": 123}
-
 size1 = 10
 x1 = list(range(size1))
 y1 = np.random.randint(low=10, high=148, size=size1).tolist()
@@ -41,23 +40,21 @@ x2 = list(range(size2))
 y2 = np.random.randint(low=0, high=300, size=size2).tolist()
 s2 = [{"x": x, "y": y} for x, y in zip(x2, y2)]
 
-chart = sly.app.widgets.Apexchart(
+chart = sly.app.widgets.LineChart(
+    title="Max vs Denis",
     series=[{"name": "Max", "data": s1}, {"name": "Denis", "data": s2}],
-    options={
-        "chart": {"type": "line", "zoom": {"enabled": False}},
-        "dataLabels": {"enabled": False},
-        # "stroke": {"curve": "straight"},
-        "stroke": {"curve": "smooth", "width": 2},
-        "title": {"text": "Product Trends by Month", "align": "left"},
-        "grid": {"row": {"colors": ["#f3f3f3", "transparent"], "opacity": 0.5}},
-        "xaxis": {"type": "category"},
-    },
-    type="line",
+    xaxis_type="category",
 )
+
+
+@chart.click
+def refresh_images_table():
+    print("refresh_images_table")
 
 
 @button.click
 def calculate_stats():
+    StateJson()["fdsfd"]
     stats = {}
     # for dataset in api.dataset.get_list(project.id):
     #     images = api.image.get_list(dataset.id)
