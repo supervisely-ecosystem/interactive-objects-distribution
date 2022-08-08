@@ -27,6 +27,7 @@ project_info = sly.app.widgets.ProjectThumbnail(project)
 progress = sly.app.widgets.Progress()
 button = sly.app.widgets.Button(text="Start", icon="zmdi zmdi-play")
 
+
 data = sly.app.DataJson()
 data["output1"] = {"a": 123}
 
@@ -40,35 +41,9 @@ x2 = list(range(size2))
 y2 = np.random.randint(low=0, high=300, size=size2).tolist()
 s2 = [{"x": x, "y": y} for x, y in zip(x2, y2)]
 
-
-# data["example1"] = {
-#     "series": [{"name": "Desktops", "data": y1}],
-#     "chartOptions": {
-#         "chart": {"height": 350, "type": "line", "zoom": {"enabled": False}},
-#         "dataLabels": {"enabled": False},
-#         "stroke": {"curve": "straight"},
-#         "title": {"text": "Product Trends by Month", "align": "left"},
-#         "grid": {"row": {"colors": ["#f3f3f3", "transparent"], "opacity": 0.5}},
-#         "xaxis": {
-#             "categories": [
-#                 "Jan",
-#                 "Feb",
-#                 "Mar",
-#                 "Apr",
-#                 "May",
-#                 "Jun",
-#                 "Jul",
-#                 "Aug",
-#                 "Sep",
-#             ]
-#         },
-#     },
-# }
-
-print(y1)
-data["example1"] = {
-    "series": [{"name": "Max", "data": s1}, {"name": "Denis", "data": s2}],
-    "chartOptions": {
+chart = sly.app.widgets.Apexchart(
+    series=[{"name": "Max", "data": s1}, {"name": "Denis", "data": s2}],
+    options={
         "chart": {"type": "line", "zoom": {"enabled": False}},
         "dataLabels": {"enabled": False},
         # "stroke": {"curve": "straight"},
@@ -77,17 +52,7 @@ data["example1"] = {
         "grid": {"row": {"colors": ["#f3f3f3", "transparent"], "opacity": 0.5}},
         "xaxis": {"type": "category"},
     },
-}
-
-# data["example1"] = json.loads(
-#     '{"series":[{"name":"Desktops","data":[10,41,35,51,49,62,69,91,148]}],"chartOptions":{"chart":{"height":350,"type":"line","zoom":{"enabled":false}},"dataLabels":{"enabled":false},"stroke":{"curve":"straight"},"title":{"text":"Product Trends by Month","align":"left"},"grid":{"row":{"colors":["#f3f3f3","transparent"],"opacity":0.5}},"xaxis":{"categories":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep"]}}}'
-# )
-
-# print(json.dumps(data["example1"], indent=4))
-
-data["output2"] = {"a": 123}
-data["example2"] = json.loads(
-    '{"series":[{"name":"Net Profit","data":[44,55,57,56,61,58,63,60,66]},{"name":"Revenue","data":[76,85,101,98,87,105,91,114,94]},{"name":"Free Cash Flow","data":[35,41,36,26,45,48,52,53,41]}],"chartOptions":{"chart":{"type":"bar","height":350},"plotOptions":{"bar":{"horizontal":false,"columnWidth":"55%","endingShape":"rounded"}},"dataLabels":{"enabled":false},"stroke":{"show":true,"width":2,"colors":["transparent"]},"xaxis":{"categories":["Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct"]},"yaxis":{"title":{"text":"$ (thousands)"}},"fill":{"opacity":1}}}'
+    type="line",
 )
 
 

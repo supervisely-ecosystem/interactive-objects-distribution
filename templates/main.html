@@ -12,49 +12,8 @@
   style="margin-bottom: 10px"
 >
   <div>{{{ progress.to_html() }}}</div>
-  <div class="mt10">{{{ button.to_html() }}}</div>
+  <div style="margin-top: 10px">{{{ button.to_html() }}}</div>
+  <div style="margin-top: 10px">{{{ chart.to_html() }}}</div>
+  <div>123</div>
+  <div>{{state.chart.clicked_value}}</div>
 </sly-card>
-
-<div style="background-color: white">
-  <sly-apexchart
-    :options="data.example1.chartOptions"
-    :series="data.example1.series"
-    type="line"
-    @click="data.output1 = $event"
-    height="350"
-  />
-</div>
-<div>{{data.output1}}</div>
-
-<!-- <h1>Tests</h1>
-<div>{{{ progress.to_html() }}}</div>
-<div class="mt10">{{{ button.to_html() }}}</div>
-
-<div></div>
-<div></div>
-<div></div>
-<div>123</div>
-<div>{{data.output1}}</div>
-
-<div style="background-color: white">
-  <sly-apexchart
-    :options="data.example1.chartOptions"
-    :series="data.example1.series"
-    type="line"
-    @click="data.output1 = $event"
-    height="150"
-  />
-</div>
-<div>Denis</div>
-
-<div style="width: 500px">
-  <sly-apexchart
-    :options="data.example2.chartOptions"
-    :series="data.example2.series"
-    type="bar"
-    @click="data.output2 = $event"
-    height="650"
-  />
-</div>
-<div>Maxim</div>
-<div>{{data.output2}}</div> -->
