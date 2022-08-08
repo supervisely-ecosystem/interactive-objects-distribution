@@ -15,6 +15,17 @@
   <div class="mt10">{{{ button.to_html() }}}</div>
 </sly-card>
 
+<div style="background-color: white">
+  <sly-apexchart
+    :options="data.example1.chartOptions"
+    :series="data.example1.series"
+    type="line"
+    @click="data.output1 = $event"
+    height="350"
+  />
+</div>
+<div>{{data.output1}}</div>
+
 <!-- <h1>Tests</h1>
 <div>{{{ progress.to_html() }}}</div>
 <div class="mt10">{{{ button.to_html() }}}</div>
