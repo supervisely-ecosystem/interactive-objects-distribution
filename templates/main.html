@@ -7,12 +7,15 @@
   subtitle="Click on chart to preview corresponding images"
   vertical-gap="10px"
 >
-  <div>{{{ progress }}}</div>
-  <div>{{{ button }}}</div>
-  <div>{{{ chart }}}</div>
+  <!-- style="width: 50%" -->
+  <div>
+    <div>{{{ progress }}}</div>
+    <div>{{{ button }}}</div>
+    <div>{{{ chart }}}</div>
+  </div>
 </sly-card>
 
-<sly-grid template="1fr 1fr">
+<sly-grid template="3fr 2fr">
   <sly-card title="Table" subtitle="description">
     <div>{{{ table }}}</div>
   </sly-card>
