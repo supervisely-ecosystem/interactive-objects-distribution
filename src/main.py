@@ -16,6 +16,8 @@ from supervisely.app.content import DataJson, StateJson
 # table - preview column
 # line chart - yaxis_autorescale=False
 # grid gallery - empty gallery message
+# label - click on XXX to see YYY
+# label - you clicked XXX and it is YYY
 
 # for convenient debug, has no effect in production
 load_dotenv("local.env")
@@ -57,8 +59,7 @@ def calculate_stats():
     stats = defaultdict(lambda: defaultdict(int))
 
     # class name -> objects count (x) -> {image_info, row}
-    # row -> "id", "dataset", "name (click)" , "width", "height", "objects", preview
-    tables_rows = defaultdict(lambda: defaultdict(lambda: {"infos": [], "rows": []}))
+    tables_rows = defaultdict(lambda: defaultdict(lambda: []))
 
     max_x = 1
     with progress(message=f"Processing images...", total=project.items_count) as pbar:
@@ -77,8 +78,7 @@ def calculate_stats():
                         objects_count = counters[class_name]
                         stats[class_name][objects_count] += 1
                         max_x = max(max_x, objects_count)
-                        tables_rows[class_name][objects_count]["infos"].append(image)
-                        tables_rows[class_name][objects_count]["rows"].append(
+                        tables_rows[class_name][objects_count].append(
                             [
                                 image.id,
                                 image.name,
@@ -95,20 +95,14 @@ def calculate_stats():
         y = [0] * len(x)
         for px, py in d.items():
             y[px] = py
-        # x, y = list(d.keys()), list(d.values())
         chart.add_series(class_name, x, y)
-        time.sleep(3)
 
 
 @chart.click
 def refresh_images_table(datapoint: sly.app.widgets.LineChart.ClickedDataPoint):
     class_name = datapoint.series_name
     objects_count = datapoint.x
-    images_count = datapoint.y
-
-    rows = tables_rows[class_name][objects_count]["rows"]
-    if len(rows) != images_count:
-        raise ValueError("num rows in table != num images in chart")
+    rows = tables_rows[class_name][objects_count]
     df = pd.DataFrame(rows, columns=table_columns)
     table.read_pandas(df)
 
