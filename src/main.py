@@ -35,7 +35,7 @@ chart = sly.app.widgets.LineChart(
     xaxis_type="category",
     xaxis_title="Number of objects",
     yaxis_title="Number of images",
-    yaxis_autorescale=True,
+    yaxis_autorescale=False,
     height=500,
 )
 
@@ -55,18 +55,6 @@ def refresh_images_table(datapoint: sly.app.widgets.LineChart.ClickedDataPoint):
 
 @button.click
 def calculate_stats():
-
-    # for name in ["maxim", "denis"]:
-    #     total = 20
-    #     with progress(message=f"Generating '{name}' chart...", total=total) as pbar:
-    #         for i in range(total):
-    #             time.sleep(0.1)
-    #             pbar.update(1)
-    #     x, y = generate_random_chart(random.randint(15, 30))
-    #     chart.add_series(name, x, y)
-
-    # return
-
     # class name -> objects count (x) -> images count (y)
     stats = defaultdict(lambda: defaultdict(int))
 
