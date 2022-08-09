@@ -16,6 +16,8 @@ from supervisely.app.content import DataJson, StateJson
 # table - preview column
 # GridGallery - replace image
 # line chart - yaxis_autorescale=False
+# grid gallery - empty gallery message
+# LabeledImage
 
 # for convenient debug, has no effect in production
 load_dotenv("local.env")
@@ -46,7 +48,7 @@ chart = sly.app.widgets.LineChart(
     height=350,
 )
 table = sly.app.widgets.Table(data=None, width="100%")  # fixed_cols=1
-preview = sly.app.widgets.GridGallery(1)
+labeled_image = sly.app.widgets.LabeledImage()
 
 
 @button.click
@@ -125,6 +127,4 @@ def show_image(datapoint: sly.app.widgets.Table.ClickedDataPoint):
     image = api.image.get_info_by_id(image_id)
     ann_json = api.annotation.download_json(image_id)
     ann = sly.Annotation.from_json(ann_json, meta)
-    preview.append(image.preview_url, ann, image.name)
-
-    # df = pd.DataFrame(data, columns=["Name", "Age"])
+    labeled_image.set_image(title=image.name, image_url=image.preview_url, ann=ann)
