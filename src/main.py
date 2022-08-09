@@ -17,11 +17,11 @@ from supervisely.app.content import DataJson, StateJson
 load_dotenv("local.env")
 load_dotenv(os.path.expanduser("~/supervisely.env"))
 
-project_id = int(os.environ["modal.state.slyProjectId"])
 api = sly.Api()
-project = api.project.get_info_by_id(project_id)
-
 app = sly.Application()
+
+project_id = int(os.environ["modal.state.slyProjectId"])
+project = api.project.get_info_by_id(project_id)
 
 # define all UI widgets here
 project_info = sly.app.widgets.ProjectThumbnail(project)
