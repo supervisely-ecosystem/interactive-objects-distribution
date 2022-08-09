@@ -70,7 +70,9 @@ def calculate_stats():
                 annotations = api.annotation.download_json_batch(dataset.id, batch_ids)
                 for image, ann_json in zip(batch, annotations):
                     ann = sly.Annotation.from_json(ann_json, meta)
-                    max_x = increment_stats(max_x, stats, tables_rows, image, ann, meta)
+                    max_x = increment_stats(
+                        stats, tables_rows, max_x, dataset, image, ann, meta
+                    )
                     pbar.update(1)
 
     for class_name, d in stats.items():

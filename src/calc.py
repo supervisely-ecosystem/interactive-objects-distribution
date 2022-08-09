@@ -7,6 +7,7 @@ def dict_to_xy(d: dict, max_x: int):
     y = [0] * len(x)
     for px, py in d.items():
         y[px] = py
+    return x, y
 
 
 def increment_stats(
