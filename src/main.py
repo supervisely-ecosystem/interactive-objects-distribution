@@ -14,7 +14,7 @@ from src.calc import dict_to_xy, increment_stats
 # grid gallery - empty gallery message
 # label - click on XXX to see YYY
 # label - you clicked XXX and it is YYY
-# lines or bars??? YY
+# lines or bars or confusion matrix???? ??? YY
 
 # for convenient debug, has no effect in production
 load_dotenv("local.env")
