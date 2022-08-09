@@ -2,12 +2,10 @@ from collections import defaultdict
 import os
 from dotenv import load_dotenv
 import supervisely as sly
-import time
-import numpy as np
 import pandas as pd
-import random
 
 from supervisely.app.content import DataJson, StateJson
+from src.calc import dict_to_xy, increment_stats
 
 # TODO:
 # from supervisely.app.fastapi import available_after_shutdown - auto in init
@@ -18,6 +16,7 @@ from supervisely.app.content import DataJson, StateJson
 # grid gallery - empty gallery message
 # label - click on XXX to see YYY
 # label - you clicked XXX and it is YYY
+# lines or bars??? YY
 
 # for convenient debug, has no effect in production
 load_dotenv("local.env")
@@ -26,6 +25,7 @@ load_dotenv(os.path.expanduser("~/supervisely.env"))
 api = sly.Api()
 app = sly.Application()
 
+# variables
 project_id = int(os.environ["modal.state.slyProjectId"])
 project = api.project.get_info_by_id(project_id)
 meta = sly.ProjectMeta.from_json(api.project.get_meta(project_id))
@@ -48,7 +48,7 @@ chart = sly.app.widgets.LineChart(
     yaxis_autorescale=True,
     height=350,
 )
-table = sly.app.widgets.Table(data=None, width="100%")  # fixed_cols=1
+table = sly.app.widgets.Table(fixed_cols=1, width="100%")
 labeled_image = sly.app.widgets.LabeledImage()
 
 
@@ -70,31 +70,11 @@ def calculate_stats():
                 annotations = api.annotation.download_json_batch(dataset.id, batch_ids)
                 for image, ann_json in zip(batch, annotations):
                     ann = sly.Annotation.from_json(ann_json, meta)
-                    counters = defaultdict(int)
-                    for label in ann.labels:
-                        counters[label.obj_class.name] += 1
-                    for obj_class in meta.obj_classes:
-                        class_name = obj_class.name
-                        objects_count = counters[class_name]
-                        stats[class_name][objects_count] += 1
-                        max_x = max(max_x, objects_count)
-                        tables_rows[class_name][objects_count].append(
-                            [
-                                image.id,
-                                image.name,
-                                dataset.name,
-                                len(ann.labels),
-                                image.width,
-                                image.height,
-                            ]
-                        )
+                    max_x = increment_stats(max_x, stats, tables_rows, image, ann, meta)
                     pbar.update(1)
 
     for class_name, d in stats.items():
-        x = list(range(max_x + 1))
-        y = [0] * len(x)
-        for px, py in d.items():
-            y[px] = py
+        x, y = dict_to_xy(d, max_x)
         chart.add_series(class_name, x, y)
 
 
