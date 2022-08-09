@@ -9,11 +9,8 @@ import random
 from supervisely.app.content import DataJson, StateJson
 
 # TODO:
-# from supervisely.app.fastapi import available_after_shutdown
-# available_after_shutdown hiddend - auto in init
+# from supervisely.app.fastapi import available_after_shutdown - auto in init
 # table per page change default
-# widgets clicks if-else
-# jinja vscode
 # progress bar - checkbox ok, finished message, hide after success
 
 # for convenient debug, has no effect in production
@@ -39,7 +36,7 @@ iris = pd.read_csv(
 table = sly.app.widgets.Table(data=iris, fixed_cols=2)
 
 
-# @chart.click
+@chart.click
 def refresh_images_table(datapoint: sly.app.widgets.LineChart.ClickedDataPoint):
     print(f"Line: {datapoint.series_name}")
     print(f"x = {datapoint.x}")
@@ -59,8 +56,10 @@ def calculate_stats():
 
 
 @table.click
-def show_image(selcted_row):
-    print(f"-->>>!!! {selcted_row}")
+def show_image(datapoint: sly.app.widgets.Table.ClickedDataPoint):
+    print("Column name = ", datapoint.column_name)
+    print("Cell value = ", datapoint.cell_value)
+    print("Row = ", datapoint.row)
 
 
 def generate_random_chart(n=30):
