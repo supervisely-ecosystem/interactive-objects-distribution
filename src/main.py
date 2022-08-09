@@ -1,10 +1,8 @@
-from collections import defaultdict
 import os
+from collections import defaultdict
 from dotenv import load_dotenv
 import supervisely as sly
 import pandas as pd
-
-from supervisely.app.content import DataJson, StateJson
 from src.calc import dict_to_xy, increment_stats
 
 # TODO:
