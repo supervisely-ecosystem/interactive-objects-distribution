@@ -33,7 +33,8 @@ chart = sly.app.widgets.LineChart(title="Max vs Denis", xaxis_type="category")
 iris = pd.read_csv(
     "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv"
 )
-table = sly.app.widgets.Table(data=iris, fixed_cols=2)
+iris.insert(loc=0, column="index", value=np.arange(len(iris)))
+table = sly.app.widgets.Table(data=iris, fixed_cols=1)
 
 
 @chart.click
