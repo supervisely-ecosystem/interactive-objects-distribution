@@ -11,9 +11,13 @@ from supervisely.app.content import DataJson, StateJson
 
 # TODO:
 # from supervisely.app.fastapi import available_after_shutdown - auto in init
-# for convenient debug, has no effect in production
-# yaxis autorescale
+# table - fixed_cols test
+# table - image name clickable + icon
+# table - preview column
+# GridGallery - replace image
+# line chart - yaxis_autorescale=False
 
+# for convenient debug, has no effect in production
 load_dotenv("local.env")
 load_dotenv(os.path.expanduser("~/supervisely.env"))
 
@@ -25,6 +29,10 @@ project = api.project.get_info_by_id(project_id)
 meta = sly.ProjectMeta.from_json(api.project.get_meta(project_id))
 if len(meta.obj_classes) == 0:
     raise ValueError("App finished: project does not have classes")
+table_columns = ["id", "image", "dataset", "labels", "width", "height"]
+tables_rows = None
+stats = None
+
 
 # define all UI widgets here
 project_info = sly.app.widgets.ProjectThumbnail(project)
@@ -35,32 +43,21 @@ chart = sly.app.widgets.LineChart(
     xaxis_type="category",
     xaxis_title="Number of objects",
     yaxis_title="Number of images",
-    yaxis_autorescale=False,
-    height=500,
+    height=350,
 )
-
-iris = pd.read_csv(
-    "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv"
-)
-iris.insert(loc=0, column="index", value=np.arange(len(iris)))
-table = sly.app.widgets.Table(data=iris, width="100%")  # fixed_cols=1
-
-
-@chart.click
-def refresh_images_table(datapoint: sly.app.widgets.LineChart.ClickedDataPoint):
-    print(f"Line: {datapoint.series_name}")
-    print(f"x = {datapoint.x}")
-    print(f"y = {datapoint.y}")
+table = sly.app.widgets.Table(data=None, width="100%")  # fixed_cols=1
+preview = sly.app.widgets.GridGallery(1)
 
 
 @button.click
 def calculate_stats():
+    global stats, tables_rows
     # class name -> objects count (x) -> images count (y)
     stats = defaultdict(lambda: defaultdict(int))
 
     # class name -> objects count (x) -> {image_info, row}
     # row -> "id", "dataset", "name (click)" , "width", "height", "objects", preview
-    rows = defaultdict(lambda: defaultdict(lambda: {"infos": [], "rows": []}))
+    tables_rows = defaultdict(lambda: defaultdict(lambda: {"infos": [], "rows": []}))
 
     max_x = 1
     with progress(message=f"Processing images...", total=project.items_count) as pbar:
@@ -75,17 +72,16 @@ def calculate_stats():
                     for label in ann.labels:
                         counters[label.obj_class.name] += 1
                     for obj_class in meta.obj_classes:
-                        obj_class: sly.ObjClass
                         class_name = obj_class.name
                         objects_count = counters[class_name]
                         stats[class_name][objects_count] += 1
                         max_x = max(max_x, objects_count)
-                        rows[class_name][objects_count]["infos"].append(image)
-                        rows[class_name][objects_count]["rows"].append(
+                        tables_rows[class_name][objects_count]["infos"].append(image)
+                        tables_rows[class_name][objects_count]["rows"].append(
                             [
                                 image.id,
-                                dataset.name,
                                 image.name,
+                                dataset.name,
                                 len(ann.labels),
                                 image.width,
                                 image.height,
@@ -102,14 +98,33 @@ def calculate_stats():
         chart.add_series(class_name, x, y)
 
 
+@chart.click
+def refresh_images_table(datapoint: sly.app.widgets.LineChart.ClickedDataPoint):
+    print(f"Line: {datapoint.series_name}")
+    print(f"x = {datapoint.x}")
+    print(f"y = {datapoint.y}")
+
+    class_name = datapoint.series_name
+    objects_count = datapoint.x
+    images_count = datapoint.y
+
+    rows = tables_rows[class_name][objects_count]["rows"]
+    if len(rows) != images_count:
+        raise ValueError("num rows in table != num images in chart")
+    df = pd.DataFrame(rows, columns=table_columns)
+    table.read_pandas(df)
+
+
 @table.click
 def show_image(datapoint: sly.app.widgets.Table.ClickedDataPoint):
     print("Column name = ", datapoint.column_name)
     print("Cell value = ", datapoint.cell_value)
     print("Row = ", datapoint.row)
 
+    image_id = datapoint.row["id"]
+    image = api.image.get_info_by_id(image_id)
+    ann_json = api.annotation.download_json(image_id)
+    ann = sly.Annotation.from_json(ann_json, meta)
+    preview.append(image.preview_url, ann, image.name)
 
-def generate_random_chart(n=30):
-    x = list(range(n))
-    y = np.random.randint(low=0, high=300, size=n).tolist()
-    return x, y
+    # df = pd.DataFrame(data, columns=["Name", "Age"])
