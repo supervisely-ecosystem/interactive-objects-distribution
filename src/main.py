@@ -14,10 +14,8 @@ from supervisely.app.content import DataJson, StateJson
 # table - fixed_cols test
 # table - image name clickable + icon
 # table - preview column
-# GridGallery - replace image
 # line chart - yaxis_autorescale=False
 # grid gallery - empty gallery message
-# LabeledImage
 
 # for convenient debug, has no effect in production
 load_dotenv("local.env")
@@ -102,10 +100,6 @@ def calculate_stats():
 
 @chart.click
 def refresh_images_table(datapoint: sly.app.widgets.LineChart.ClickedDataPoint):
-    print(f"Line: {datapoint.series_name}")
-    print(f"x = {datapoint.x}")
-    print(f"y = {datapoint.y}")
-
     class_name = datapoint.series_name
     objects_count = datapoint.x
     images_count = datapoint.y
@@ -119,12 +113,8 @@ def refresh_images_table(datapoint: sly.app.widgets.LineChart.ClickedDataPoint):
 
 @table.click
 def show_image(datapoint: sly.app.widgets.Table.ClickedDataPoint):
-    print("Column name = ", datapoint.column_name)
-    print("Cell value = ", datapoint.cell_value)
-    print("Row = ", datapoint.row)
-
     image_id = datapoint.row["id"]
     image = api.image.get_info_by_id(image_id)
     ann_json = api.annotation.download_json(image_id)
     ann = sly.Annotation.from_json(ann_json, meta)
-    labeled_image.set_image(title=image.name, image_url=image.preview_url, ann=ann)
+    labeled_image.set(title=image.name, image_url=image.preview_url, ann=ann)
