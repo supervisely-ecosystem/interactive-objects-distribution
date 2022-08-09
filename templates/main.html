@@ -1,21 +1,23 @@
-<sly-card
-  title="Input project"
-  subtitle="All labels will be used in stats"
-  style="margin-bottom: 15px"
->
+<sly-card title="Input project" subtitle="All labels will be used in stats">
   <div>{{{ project_info }}}</div>
 </sly-card>
 
 <sly-card
   title="Interactive chart"
   subtitle="Click on chart to preview corresponding images"
-  style="margin-bottom: 10px"
+  vertical-gap="10"
 >
   <div>{{{ progress }}}</div>
-  <div style="margin-top: 10px">{{{ button }}}</div>
-  <div style="margin-top: 10px">{{{ chart }}}</div>
+  <div>{{{ button }}}</div>
+  <div>{{{ chart }}}</div>
 </sly-card>
 
-<sly-card title="Table" subtitle="description" style="margin-bottom: 15px">
-  <div>{{{ table }}}</div>
-</sly-card>
+<sly-grid template='"1fr 1fr"'>
+  <sly-card title="Table" subtitle="description">
+    <div>{{{ table }}}</div>
+  </sly-card>
+
+  <sly-card title="Image preview" subtitle="All labels will be used in stats">
+    <div>{{{ project_info }}}</div>
+  </sly-card>
+</sly-grid>
