@@ -14,6 +14,7 @@ from supervisely.app.content import DataJson, StateJson
 # table per page change default
 # widgets clicks if-else
 # jinja vscode
+# progress bar - checkbox ok, finished message, hide after success
 
 # for convenient debug, has no effect in production
 load_dotenv("local.env")

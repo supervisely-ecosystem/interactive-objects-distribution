@@ -7,14 +7,18 @@
   "editor.formatOnSave": true,
   "editor.formatOnPaste": true,
   "editor.formatOnType": true,
-  // "[html]": {
-  //   "editor.defaultFormatter": "esbenp.prettier-vscode"
-  // },
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    // "editor.defaultFormatter": "vscode.emmet"
+  },
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "python.formatting.provider": "black",
   // "emmet.includeLanguages": {
   //   "jinja-html": "html"
-  // }
+  // },
+  // "files.associations": {
+  //   "*.html": "jinja-html"
+  // },
 }
