@@ -43,6 +43,7 @@ chart = sly.app.widgets.LineChart(
     xaxis_type="category",
     xaxis_title="Number of objects",
     yaxis_title="Number of images",
+    yaxis_autorescale=True,
     height=350,
 )
 table = sly.app.widgets.Table(data=None, width="100%")  # fixed_cols=1
@@ -96,6 +97,7 @@ def calculate_stats():
             y[px] = py
         # x, y = list(d.keys()), list(d.values())
         chart.add_series(class_name, x, y)
+        time.sleep(3)
 
 
 @chart.click
@@ -113,8 +115,10 @@ def refresh_images_table(datapoint: sly.app.widgets.LineChart.ClickedDataPoint):
 
 @table.click
 def show_image(datapoint: sly.app.widgets.Table.ClickedDataPoint):
+    labeled_image.loading = True
     image_id = datapoint.row["id"]
     image = api.image.get_info_by_id(image_id)
     ann_json = api.annotation.download_json(image_id)
     ann = sly.Annotation.from_json(ann_json, meta)
     labeled_image.set(title=image.name, image_url=image.preview_url, ann=ann)
+    labeled_image.loading = False
