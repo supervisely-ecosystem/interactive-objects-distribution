@@ -12,6 +12,8 @@ from supervisely.app.content import DataJson, StateJson
 # TODO:
 # from supervisely.app.fastapi import available_after_shutdown - auto in init
 # for convenient debug, has no effect in production
+# yaxis autorescale
+
 load_dotenv("local.env")
 load_dotenv(os.path.expanduser("~/supervisely.env"))
 
@@ -33,9 +35,9 @@ chart = sly.app.widgets.LineChart(
     xaxis_type="category",
     xaxis_title="Number of objects",
     yaxis_title="Number of images",
+    yaxis_autorescale=True,
     height=500,
 )
-
 
 iris = pd.read_csv(
     "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv"
