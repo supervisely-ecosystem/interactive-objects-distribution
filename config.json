@@ -1,4 +1,5 @@
 {
+  "version": "2.0.0",
   "name": "Interactive objects distribution",
   "description": "Explore images with certain number of objects of specific class",
   "categories": ["images", "visualization", "exploration", "statistics"],
