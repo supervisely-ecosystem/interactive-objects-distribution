@@ -5,10 +5,8 @@ import src.stats as stats
 
 # TODO:
 # from supervisely.app.fastapi import available_after_shutdown - auto in init
-# grid gallery - empty gallery message
 # label - click on XXX to see YYY
 # label - you clicked XXX and it is YYY
-# hide button after sucess
 
 # for convenient debug, has no effect in production
 load_dotenv("local.env")
@@ -26,7 +24,7 @@ stats.init(project, meta)
 # all UI widgets
 project_info = sly.app.widgets.ProjectThumbnail(project)
 progress = sly.app.widgets.Progress()
-button = sly.app.widgets.Button(text="Start", icon="zmdi zmdi-play")
+button = sly.app.widgets.Button(text="Calculate stats", icon="zmdi zmdi-play")
 chart = sly.app.widgets.LineChart(
     title="Objects count distribution for every class",
     xaxis_type="category",
@@ -52,6 +50,8 @@ def calculate_stats():
 
     for class_name, x, y in stats.get_series():
         chart.add_series(class_name, x, y)
+
+    button.hide()
 
 
 @chart.click

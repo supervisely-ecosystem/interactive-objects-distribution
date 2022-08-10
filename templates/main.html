@@ -3,8 +3,8 @@
 </sly-card>
 
 <sly-card
-  title="Interactive chart"
-  subtitle="👉 Click on chart datapoint to preview corresponding images"
+  title="Step1. Interactive chart"
+  subtitle="👉 Click on chart datapoint to show table with corresponding images"
   vertical-gap="10px"
 >
   <div>{{{ progress }}}</div>
@@ -13,11 +13,17 @@
 </sly-card>
 
 <sly-grid template="3fr 2fr">
-  <sly-card title="Table" subtitle="👉 Click on table row to preview image">
+  <sly-card
+    title="Step2. Images table"
+    subtitle="👉 Click on table row to preview image"
+  >
     <div>{{{ table }}}</div>
   </sly-card>
 
-  <sly-card title="Image preview" subtitle="All labels will be used in stats">
+  <sly-card
+    title="Step3. Image preview"
+    subtitle="Click table cell to preview image with labels"
+  >
     <div>{{{ labeled_image }}}</div>
   </sly-card>
 </sly-grid>
