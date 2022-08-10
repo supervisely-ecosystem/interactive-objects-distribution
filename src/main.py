@@ -4,7 +4,7 @@ import supervisely as sly
 import src.stats as stats
 
 # TODO:
-# button in table
+# DoneLabel -> Label(status=Done)
 
 # for convenient debug, has no effect in production
 load_dotenv("local.env")
@@ -13,17 +13,18 @@ load_dotenv(os.path.expanduser("~/supervisely.env"))
 api = sly.Api()
 app = sly.Application()
 
-# variables
+# get project info from server
 project_id = int(os.environ["modal.state.slyProjectId"])
 project = api.project.get_info_by_id(project_id)
 meta = sly.ProjectMeta.from_json(api.project.get_meta(project_id))
 stats.init(project, meta)
 
-# all UI widgets
+
+# initialize widgets we will use in UI
 project_info = sly.app.widgets.ProjectThumbnail(project)
 progress = sly.app.widgets.Progress()
 button = sly.app.widgets.Button(text="Calculate stats", icon="zmdi zmdi-play")
-finish_label = sly.app.widgets.DoneLabel()
+finish_label = sly.app.widgets.Label(status="success")
 chart = sly.app.widgets.LineChart(
     title="Objects count distribution for every class",
     xaxis_type="category",
