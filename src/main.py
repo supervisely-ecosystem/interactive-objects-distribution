@@ -76,4 +76,4 @@ def show_image(datapoint: sly.app.widgets.Table.ClickedDataPoint):
     labeled_image.loading = False
 
 
-# app.shutdown()
+app.shutdown()
