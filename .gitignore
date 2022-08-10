@@ -1,0 +1,6 @@
+.venv
+__pycache__
+.DS_Store
+secret.env
+supervisely
+static/sly-app-widgets-2.0.1.bundle.js
