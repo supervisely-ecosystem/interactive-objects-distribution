@@ -4,7 +4,7 @@ import supervisely as sly
 import src.stats as stats
 
 # TODO:
-# DoneLabel -> Label(status=Done)
+# empty spaces v-if
 
 # for convenient debug, has no effect in production
 load_dotenv("local.env")
@@ -24,7 +24,7 @@ stats.init(project, meta)
 project_info = sly.app.widgets.ProjectThumbnail(project)
 progress = sly.app.widgets.Progress()
 button = sly.app.widgets.Button(text="Calculate stats", icon="zmdi zmdi-play")
-finish_label = sly.app.widgets.Label(status="success")
+finish_msg = sly.app.widgets.Text(status="success")
 chart = sly.app.widgets.LineChart(
     title="Objects count distribution for every class",
     xaxis_type="category",
@@ -53,7 +53,7 @@ def calculate_stats():
         chart.add_series(class_name, x, y)
 
     button.hide()
-    finish_label.text = "Statistics has been successfully calculated"
+    finish_msg.text = "Statistics has been successfully calculated"
 
 
 @chart.click

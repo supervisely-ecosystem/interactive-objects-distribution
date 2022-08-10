@@ -53,7 +53,8 @@ def increment(
                 len(ann.labels),
                 image.width,
                 image.height,
-                sly.utils.get_preview_link(),
+                # sly.utils.get_preview_link(),
+                sly.app.widgets.Table.get_html_text_as_button(),
             ]
         )
 
