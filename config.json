@@ -1,9 +1,10 @@
 {
+  "type": "app",
   "version": "2.0.0",
   "name": "Interactive objects distribution",
   "description": "Explore images with certain number of objects of specific class",
   "categories": ["images", "visualization", "exploration", "statistics"],
-  "icon": "",
+  "icon": "https://user-images.githubusercontent.com/12828725/183916661-224ff8cb-a3d1-4b82-a629-def8c6de1db5.png",
   "poster": "",
   "entrypoint": "python -m uvicorn src.main:app --host 0.0.0.0 --port 8000",
   "port": 8000,
