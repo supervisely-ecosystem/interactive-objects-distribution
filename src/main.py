@@ -3,11 +3,6 @@ from dotenv import load_dotenv
 import supervisely as sly
 import src.stats as stats
 
-# TODO:
-# from supervisely.app.fastapi import available_after_shutdown - auto in init
-# label - click on XXX to see YYY
-# label - you clicked XXX and it is YYY
-
 # for convenient debug, has no effect in production
 load_dotenv("local.env")
 load_dotenv(os.path.expanduser("~/supervisely.env"))
