@@ -23,7 +23,7 @@ project = api.project.get_info_by_id(project_id)
 meta = sly.ProjectMeta.from_json(api.project.get_meta(project_id))
 stats.init(project, meta)
 
-# define all UI widgets here
+# all UI widgets
 project_info = sly.app.widgets.ProjectThumbnail(project)
 progress = sly.app.widgets.Progress()
 button = sly.app.widgets.Button(text="Start", icon="zmdi zmdi-play")
@@ -56,7 +56,7 @@ def calculate_stats():
 
 @chart.click
 def refresh_images_table(datapoint: sly.app.widgets.LineChart.ClickedDataPoint):
-    df = stats.get_pandas_table(cls_name=datapoint.series_name, obj_count=datapoint.x)
+    df = stats.get_table_data(cls_name=datapoint.series_name, obj_count=datapoint.x)
     table.read_pandas(df)
 
 

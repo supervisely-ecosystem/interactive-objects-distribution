@@ -72,7 +72,7 @@ def get_series():
         yield class_name, x, y
 
 
-def get_pandas_table(cls_name, obj_count):
+def get_table_data(cls_name, obj_count):
     rows = stats[cls_name][obj_count]["table_rows"]
     df = pd.DataFrame(rows, columns=table_columns)
     return df
