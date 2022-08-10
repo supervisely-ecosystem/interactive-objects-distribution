@@ -1,8 +1,13 @@
 {
-  "main_script": "src/main.py",
   "name": "Interactive objects distribution",
-  "description": "TODO",
-  "categories": ["TODO"],
+  "description": "Explore images with certain number of objects of specific class",
+  "categories": ["images", "visualization", "exploration", "statistics"],
   "icon": "",
-  "poster": ""
+  "poster": "",
+  "entrypoint": "python -m uvicorn src.main:app --host 0.0.0.0 --port 8000",
+  "port": 8000,
+  "context_menu": {
+    "target": ["images_project"],
+    "context_root": "Report"
+  }
 }
