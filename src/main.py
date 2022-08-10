@@ -25,12 +25,14 @@ stats.init(project, meta)
 project_info = sly.app.widgets.ProjectThumbnail(project)
 progress = sly.app.widgets.Progress()
 button = sly.app.widgets.Button(text="Calculate stats", icon="zmdi zmdi-play")
+finish_label = sly.app.widgets.DoneLabel()
 chart = sly.app.widgets.LineChart(
     title="Objects count distribution for every class",
     xaxis_type="category",
     xaxis_title="Number of objects",
     yaxis_title="Number of images",
 )
+chart_click_info = sly.app.widgets.NotificationBox()
 table = sly.app.widgets.Table(fixed_cols=1, width="100%")
 labeled_image = sly.app.widgets.LabeledImage()
 
@@ -52,12 +54,17 @@ def calculate_stats():
         chart.add_series(class_name, x, y)
 
     button.hide()
+    finish_label.text = "Statistics has been successfully calculated"
 
 
 @chart.click
 def refresh_images_table(datapoint: sly.app.widgets.LineChart.ClickedDataPoint):
     df = stats.get_table_data(cls_name=datapoint.series_name, obj_count=datapoint.x)
     table.read_pandas(df)
+    chart_click_info.set(
+        title="Table for clicked chart datapoint",
+        description=f"Images that have at least {datapoint.x} object(s) of class {datapoint.series_name}",
+    )
 
 
 @table.click
