@@ -52,6 +52,8 @@ def calculate_stats():
     button.hide()
     finish_msg.text = "Statistics has been successfully calculated"
 
+    # app.shutdown()
+
 
 @chart.click
 def refresh_images_table(datapoint: sly.app.widgets.LineChart.ClickedDataPoint):
@@ -72,3 +74,6 @@ def show_image(datapoint: sly.app.widgets.Table.ClickedDataPoint):
     ann = sly.Annotation.from_json(ann_json, meta)
     labeled_image.set(title=image.name, image_url=image.preview_url, ann=ann)
     labeled_image.loading = False
+
+
+# app.shutdown()
