@@ -10,11 +10,6 @@ load_dotenv(os.path.expanduser("~/supervisely.env"))
 api = sly.Api()
 app = sly.Application()
 
-# TODO:
-# datapoint_formatter = "There are {y} images with {x} objects of class {series_name}"
-# one colur / multiple colors - colors of classes (distributed=True)
-# distributed: row / table
-
 # get project info from server
 project_id = int(os.environ["modal.state.slyProjectId"])
 project = api.project.get_info_by_id(project_id)
