@@ -23,7 +23,7 @@ progress = sly.app.widgets.Progress()
 button = sly.app.widgets.Button(text="Calculate stats", icon="zmdi zmdi-play")
 finish_msg = sly.app.widgets.Text(status="success")
 chart = sly.app.widgets.HeatmapChart(
-    title="Objects count distribution for every class",
+    title="Objects on images - distribution for every class",
     xaxis_title="Number of objects on image",
     color_range="row",
     tooltip="There are {y} images with {x} objects of class {series_name}",
