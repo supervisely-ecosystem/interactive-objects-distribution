@@ -10,6 +10,9 @@ load_dotenv(os.path.expanduser("~/supervisely.env"))
 api = sly.Api()
 app = sly.Application()
 
+# TODO:
+# uvicorn.run??? https://github.com/encode/uvicorn/issues/1301
+
 # get project info from server
 project_id = int(os.environ["modal.state.slyProjectId"])
 project = api.project.get_info_by_id(project_id)
