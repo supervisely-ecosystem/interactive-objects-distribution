@@ -26,7 +26,7 @@ finish_msg = sly.app.widgets.Text(status="success")
 chart = sly.app.widgets.LineChart(
     title="Objects count distribution for every class",
     xaxis_type="category",
-    xaxis_title="Number of objects",
+    xaxis_title="Number of objects on image",
     yaxis_title="Number of images",
 )
 chart_click_info = sly.app.widgets.NotificationBox()
