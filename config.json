@@ -11,6 +11,5 @@
   "context_menu": {
     "target": ["images_project"],
     "context_root": "Report"
-  },
-  "integrated_into": ["panel"]
+  }
 }

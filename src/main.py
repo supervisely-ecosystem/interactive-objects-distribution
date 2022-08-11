@@ -47,8 +47,10 @@ def calculate_stats():
                     stats.increment(dataset, image, ann)
                     pbar.update(1)
 
+    lines = []
     for class_name, x, y in stats.get_series():
-        chart.add_series(class_name, x, y)
+        lines.append({"name": class_name, "x": x, "y": y})
+    chart.add_series_batch(lines)
 
     button.hide()
     finish_msg.text = "Statistics has been successfully calculated"
