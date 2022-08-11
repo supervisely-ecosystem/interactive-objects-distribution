@@ -10,6 +10,10 @@ load_dotenv(os.path.expanduser("~/supervisely.env"))
 api = sly.Api()
 app = sly.Application()
 
+# TODO:
+# datapoint_formatter = "There are {y} images with {x} objects of class {series_name}"
+# one colur / multiple colors - colors of classes (distributed=True)
+# distributed: row / table
 
 # get project info from server
 project_id = int(os.environ["modal.state.slyProjectId"])
@@ -23,11 +27,11 @@ project_info = sly.app.widgets.ProjectThumbnail(project)
 progress = sly.app.widgets.Progress()
 button = sly.app.widgets.Button(text="Calculate stats", icon="zmdi zmdi-play")
 finish_msg = sly.app.widgets.Text(status="success")
-chart = sly.app.widgets.LineChart(
+chart = sly.app.widgets.HeatmapChart(
     title="Objects count distribution for every class",
-    xaxis_type="category",
     xaxis_title="Number of objects on image",
-    yaxis_title="Number of images",
+    color_range="row",
+    tooltip="There are {y} images with {x} objects of class {series_name}",
 )
 chart_click_info = sly.app.widgets.NotificationBox()
 table = sly.app.widgets.Table(fixed_cols=1, width="100%")
@@ -49,6 +53,7 @@ def calculate_stats():
 
     lines = []
     for class_name, x, y in stats.get_series():
+        # skip images without objects (x = 0)
         lines.append({"name": class_name, "x": x, "y": y})
     chart.add_series_batch(lines)
 
