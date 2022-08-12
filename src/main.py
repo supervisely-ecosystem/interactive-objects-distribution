@@ -58,6 +58,7 @@ def calculate_stats():
 
 @chart.click
 def refresh_images_table(datapoint: sly.app.widgets.LineChart.ClickedDataPoint):
+    labeled_image.clean_up()
     df = stats.get_table_data(cls_name=datapoint.series_name, obj_count=datapoint.x)
     table.read_pandas(df)
     chart_click_info.set(
