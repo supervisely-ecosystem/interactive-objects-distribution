@@ -35,6 +35,13 @@ labeled_image = sly.app.widgets.LabeledImage()
 
 @button.click
 def calculate_stats():
+    # from async_asgi_testclient import TestClient
+    # from supervisely.app.fastapi.utils import run_sync
+    # client = TestClient(app.get_server())
+    # resp = run_sync(client.post("/sly/shutdown"))
+
+    raise ValueError("123")
+
     with progress(message=f"Processing images...", total=project.items_count) as pbar:
         for dataset in api.dataset.get_list(project.id):
             images = api.image.get_list(dataset.id)
