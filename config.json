@@ -11,5 +11,6 @@
   "context_menu": {
     "target": ["images_project"],
     "context_root": "Report"
-  }
+  },
+  "instance_version": "6.5.22"
 }
