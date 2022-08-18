@@ -1,5 +1,4 @@
 # supervisely==6.58.0
-git+https://github.com/supervisely/supervisely.git@master
-
+git+https://github.com/supervisely/supervisely.git@master#egg=supervisely
 # code formatter
 black
