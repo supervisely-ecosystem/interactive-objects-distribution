@@ -12,5 +12,5 @@
     "target": ["images_project"],
     "context_root": "Report"
   },
-  "instance_version": "6.5.22"
+  "min_instance_version": "6.5.22"
 }
