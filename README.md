@@ -27,6 +27,7 @@ Application calculates interactive heatmap chart for every class with objects di
 # How to use
 1. Run application from the context menu of images project
 2. Open app and interact with heatmap table, images table and preview of labeled image.
+3. Stop application manually
 
 # Screenshot
 
