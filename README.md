@@ -7,7 +7,7 @@
 <p align="center">
   <a href="#Overview">Overview</a> •
   <a href="#How-to-Use">How to use</a> •
-  <a href="#Screenshot">Screenshot</a>
+  <a href="#Demo">Demo</a>
 </p>
 
 [![](https://img.shields.io/badge/supervisely-ecosystem-brightgreen)](https://ecosystem.supervise.ly/apps/supervisely-ecosystem/interactive-objects-distribution)
@@ -29,6 +29,6 @@ Application calculates interactive heatmap chart for every class with objects di
 2. Open app and interact with heatmap table, images table and preview of labeled image.
 3. Stop application manually
 
-# Screenshot
+# Demo
 
 <img src="https://user-images.githubusercontent.com/12828725/187032944-3dc14498-3758-489d-b4a6-3eaa03c5ea73.gif" />
