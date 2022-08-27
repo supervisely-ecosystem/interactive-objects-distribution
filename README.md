@@ -20,7 +20,14 @@
 
 # Overview
 
-Application calculates interactive heatmap chart for every class with objects distribution: how many images in input project with the certain number of objects of specific class. User can click table cell and see the list of all corresponding images. To preview image with annotation user just need to click preview button in images table.
+Application calculates interactive heatmap chart for every class with objects distribution: how many images are in input project with the certain number of objects of specific class. User can click table cell and see the list of all corresponding images. To preview image with annotation user just need to click preview button in images table.
+
 
 
 # How to use
+1. Run application from the context menu of images project
+2. Open app and interact with heatmap table, images table and preview of labeled image.
+
+# Screenshot
+
+<img src="https://user-images.githubusercontent.com/12828725/187032944-3dc14498-3758-489d-b4a6-3eaa03c5ea73.gif" />
