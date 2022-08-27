@@ -6,7 +6,7 @@
 
 <p align="center">
   <a href="#Overview">Overview</a> •
-  <a href="#How-to-Use">How to Use</a> •
+  <a href="#How-to-Use">How to use</a> •
   <a href="#Screenshot">Screenshot</a>
 </p>
 
@@ -20,4 +20,7 @@
 
 # Overview
 
-Application 
+Application calculates interactive heatmap chart for every class with objects distribution: how many images in input project with the certain number of objects of specific class. User can click table cell and see the list of all corresponding images. To preview image with annotation user just need to click preview button in images table.
+
+
+# How to use
