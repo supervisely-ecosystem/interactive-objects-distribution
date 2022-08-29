@@ -1,6 +1,6 @@
 <div align="center" markdown>
 
-<img src="https://user-images.githubusercontent.com/12828725/187032690-61073161-b6e9-4532-a866-6d012c9e7134.png"/>
+<img src="https://user-images.githubusercontent.com/106374579/187223426-ec7e0fae-8ba9-48fd-b71f-8680cc0f1b49.png/>
 
 # Interactive objects distribution
 
