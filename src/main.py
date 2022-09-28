@@ -8,7 +8,7 @@ load_dotenv("local.env")
 load_dotenv(os.path.expanduser("~/supervisely.env"))
 
 api = sly.Api()
-app = sly.Application()
+app = sly.Application(templates_dir="templates")
 
 # get project info from server
 project_id = int(os.environ["modal.state.slyProjectId"])
