@@ -1,6 +1,8 @@
 import os
 from dotenv import load_dotenv
 import supervisely as sly
+from supervisely.app.widgets import Container, Card, Button, Progress
+from supervisely.app.widgets import ProjectThumbnail, HeatmapChart
 import src.stats as stats
 
 # for convenient debug, has no effect in production
@@ -8,29 +10,56 @@ load_dotenv("local.env")
 load_dotenv(os.path.expanduser("~/supervisely.env"))
 
 api = sly.Api()
-app = sly.Application(templates_dir="templates")
 
 # get project info from server
-project_id = int(os.environ["modal.state.slyProjectId"])
+project_id = sly.env.project_id()
 project = api.project.get_info_by_id(project_id)
 meta = sly.ProjectMeta.from_json(api.project.get_meta(project_id))
 stats.init(project, meta)
 
+# input project
+project_preview = ProjectThumbnail(project)
+input_card = Card(
+    title="Input project", description="All labels will be used in stats", content=project_preview
+)
 
-# initialize widgets we will use in UI
-project_info = sly.app.widgets.ProjectThumbnail(project)
-progress = sly.app.widgets.Progress()
-button = sly.app.widgets.Button(text="Calculate stats", icon="zmdi zmdi-play")
-finish_msg = sly.app.widgets.Text(status="success")
-chart = sly.app.widgets.HeatmapChart(
+# interactive heatmap chart
+progress = Progress()
+button = Button(text="Calculate stats", icon="zmdi zmdi-play")
+chart = HeatmapChart(
     title="Objects on images - distribution for every class",
     xaxis_title="Number of objects on image",
     color_range="row",
     tooltip="There are {y} images with {x} objects of class {series_name}",
 )
-chart_click_info = sly.app.widgets.NotificationBox()
+chart.hide()
+heatmap_card = Card(
+    title="1️⃣ Interactive chart",
+    description="👉 Click on chart datapoint to show table with corresponding images",
+    content=Container([progress, button, chart]),
+)
+
+# interactive images table with preview gallery
+click_info = sly.app.widgets.NotificationBox(title="Table for clicked chart datapoint")
 table = sly.app.widgets.Table(fixed_cols=1, width="100%")
+table_card = Card(
+    title="2️⃣ Images table",
+    description="👉 Click on table row to preview image",
+    content=Container([click_info, table]),
+)
 labeled_image = sly.app.widgets.LabeledImage()
+preview_card = Card(
+    title="3️⃣ Image preview",
+    description="👉 Click table cell to preview image with labels",
+    content=labeled_image,
+)
+img_layout = Container(
+    widgets=[table_card, preview_card], direction="horizontal", gap=15, fractions=[1, 1]
+)
+
+app = sly.Application(
+    layout=Container(widgets=[input_card, heatmap_card, img_layout], direction="vertical", gap=15)
+)
 
 
 @button.click
@@ -45,15 +74,12 @@ def calculate_stats():
                     ann = sly.Annotation.from_json(ann_json, meta)
                     stats.increment(dataset, image, ann)
                     pbar.update(1)
-
     lines = []
     for class_name, x, y in stats.get_series():
-        # skip images without objects (x = 0)
         lines.append({"name": class_name, "x": x, "y": y})
     chart.add_series_batch(lines)
-
     button.hide()
-    finish_msg.text = "Statistics has been successfully calculated"
+    chart.show()
 
 
 @chart.click
@@ -62,15 +88,14 @@ def refresh_images_table(datapoint: sly.app.widgets.HeatmapChart.ClickedDataPoin
     labeled_image.clean_up()
     df = stats.get_table_data(cls_name=datapoint.series_name, obj_count=datapoint.x)
     table.read_pandas(df)
-    chart_click_info.set(
-        title="Table for clicked chart datapoint",
-        description=f"Images that have at least {datapoint.x} object(s) of class {datapoint.series_name}",
-    )
+    click_info.description = f"Images with {datapoint.x} object(s) of class {datapoint.series_name}"
     table.loading = False
 
 
 @table.click
 def show_image(datapoint: sly.app.widgets.Table.ClickedDataPoint):
+    if datapoint.button_name is None:
+        return
     labeled_image.loading = True
     image_id = datapoint.row["id"]
     image = api.image.get_info_by_id(image_id)
