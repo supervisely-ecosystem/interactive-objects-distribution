@@ -12,9 +12,6 @@ from supervisely.app.widgets import (
 )
 import src.stats as stats
 
-# @TODO:
-# - TypeError('expected string or bytes-like object') - click on table cell
-
 # for convenient debug, has no effect in production
 load_dotenv("local.env")
 load_dotenv(os.path.expanduser("~/supervisely.env"))
