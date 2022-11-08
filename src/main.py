@@ -101,5 +101,5 @@ def show_image(datapoint: Table.ClickedDataPoint):
     image = api.image.get_info_by_id(image_id)
     ann_json = api.annotation.download_json(image_id)
     ann = sly.Annotation.from_json(ann_json, meta)
-    labeled_image.set(title=image.name, image_url=image.preview_url, ann=ann)
+    labeled_image.set(title=image.name, image_url=image.preview_url, ann=ann, image_id=image_id)
     labeled_image.loading = False
