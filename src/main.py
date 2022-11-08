@@ -33,9 +33,7 @@ stats.init(project, meta)
 # input project
 project_info = ProjectThumbnail(project)
 input_card = Card(
-    title="Input project",
-    description="All labels will be used in stats",
-    content=project_info,
+    title="Input project", description="All labels will be used in stats", content=project_info
 )
 
 # interactive heatmap chart
@@ -68,17 +66,17 @@ preview_card = Card(
     description="👉 Click table cell to preview image with labels",
     content=labeled_image,
 )
-image_table_with_preview = Container(
+image_exploration = Container(
     widgets=[table_card, preview_card], direction="horizontal", gap=15, fractions=[1, 1]
 )
 
-layout = Container(
-    widgets=[input_card, heatmap_card, image_table_with_preview],
-    direction="vertical",
-    gap=15,
+app = sly.Application(
+    layout=Container(
+        widgets=[input_card, heatmap_card, image_exploration],
+        direction="vertical",
+        gap=15,
+    )
 )
-
-app = sly.Application(layout=layout)
 
 
 @button.click
