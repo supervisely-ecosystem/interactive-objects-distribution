@@ -39,17 +39,17 @@ input_card = Card(
 # interactive heatmap chart
 progress = Progress()
 button = Button(text="Calculate stats", icon="zmdi zmdi-play")
-finish_msg = Text(status="success")
 chart = HeatmapChart(
     title="Objects on images - distribution for every class",
     xaxis_title="Number of objects on image",
     color_range="row",
     tooltip="There are {y} images with {x} objects of class {series_name}",
 )
+chart.hide()
 heatmap_card = Card(
     title="1️⃣ Interactive chart",
     description="👉 Click on chart datapoint to show table with corresponding images",
-    content=Container([progress, button, finish_msg, chart]),
+    content=Container([progress, button, chart]),
 )
 
 # interactive images table with preview gallery
@@ -99,7 +99,7 @@ def calculate_stats():
     chart.add_series_batch(lines)
 
     button.hide()
-    finish_msg.text = "Statistics has been successfully calculated"
+    chart.show()
 
 
 @chart.click
@@ -117,6 +117,8 @@ def refresh_images_table(datapoint: sly.app.widgets.HeatmapChart.ClickedDataPoin
 
 @table.click
 def show_image(datapoint: sly.app.widgets.Table.ClickedDataPoint):
+    if datapoint.button_name is None:
+        return
     labeled_image.loading = True
     image_id = datapoint.row["id"]
     image = api.image.get_info_by_id(image_id)
