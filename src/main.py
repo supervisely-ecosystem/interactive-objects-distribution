@@ -1,36 +1,84 @@
 import os
 from dotenv import load_dotenv
 import supervisely as sly
+from supervisely.app.widgets import (
+    Container,
+    Card,
+    Button,
+    Text,
+    Progress,
+    ProjectThumbnail,
+    HeatmapChart,
+)
 import src.stats as stats
+
+# @TODO:
+# - TypeError('expected string or bytes-like object') - click on table cell
 
 # for convenient debug, has no effect in production
 load_dotenv("local.env")
 load_dotenv(os.path.expanduser("~/supervisely.env"))
 
 api = sly.Api()
-app = sly.Application(templates_dir="templates")
+
 
 # get project info from server
-project_id = int(os.environ["modal.state.slyProjectId"])
+project_id = sly.env.project_id()
 project = api.project.get_info_by_id(project_id)
 meta = sly.ProjectMeta.from_json(api.project.get_meta(project_id))
 stats.init(project, meta)
 
+############## initialize widgets and gui layout ##############
 
-# initialize widgets we will use in UI
-project_info = sly.app.widgets.ProjectThumbnail(project)
-progress = sly.app.widgets.Progress()
-button = sly.app.widgets.Button(text="Calculate stats", icon="zmdi zmdi-play")
-finish_msg = sly.app.widgets.Text(status="success")
-chart = sly.app.widgets.HeatmapChart(
+# input project
+project_info = ProjectThumbnail(project)
+input_card = Card(
+    title="Input project",
+    description="All labels will be used in stats",
+    content=project_info,
+)
+
+# interactive heatmap chart
+progress = Progress()
+button = Button(text="Calculate stats", icon="zmdi zmdi-play")
+finish_msg = Text(status="success")
+chart = HeatmapChart(
     title="Objects on images - distribution for every class",
     xaxis_title="Number of objects on image",
     color_range="row",
     tooltip="There are {y} images with {x} objects of class {series_name}",
 )
+heatmap_card = Card(
+    title="1️⃣ Interactive chart",
+    description="👉 Click on chart datapoint to show table with corresponding images",
+    content=Container([progress, button, finish_msg, chart]),
+)
+
+# interactive images table with preview gallery
 chart_click_info = sly.app.widgets.NotificationBox()
 table = sly.app.widgets.Table(fixed_cols=1, width="100%")
+table_card = Card(
+    title="2️⃣ Images table",
+    description="👉 Click on table row to preview image",
+    content=Container([chart_click_info, table]),
+)
 labeled_image = sly.app.widgets.LabeledImage()
+preview_card = Card(
+    title="3️⃣ Image preview",
+    description="👉 Click table cell to preview image with labels",
+    content=labeled_image,
+)
+image_table_with_preview = Container(
+    widgets=[table_card, preview_card], direction="horizontal", gap=15, fractions=[1, 1]
+)
+
+layout = Container(
+    widgets=[input_card, heatmap_card, image_table_with_preview],
+    direction="vertical",
+    gap=15,
+)
+
+app = sly.Application(layout=layout)
 
 
 @button.click
