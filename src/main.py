@@ -1,8 +1,8 @@
 import os
 from dotenv import load_dotenv
 import supervisely as sly
-from supervisely.app.widgets import Container, Card, Button, Progress
-from supervisely.app.widgets import ProjectThumbnail, HeatmapChart
+from supervisely.app.widgets import Container, Card, Button, Progress, LabeledImage, Table
+from supervisely.app.widgets import ProjectThumbnail, HeatmapChart, NotificationBox
 import src.stats as stats
 
 # for convenient debug, has no effect in production
@@ -40,14 +40,14 @@ heatmap_card = Card(
 )
 
 # interactive images table with preview gallery
-click_info = sly.app.widgets.NotificationBox(title="Table for clicked chart datapoint")
-table = sly.app.widgets.Table(fixed_cols=1, width="100%")
+click_info = NotificationBox(title="Table for clicked chart datapoint")
+table = Table(fixed_cols=1, width="100%")
 table_card = Card(
     title="2️⃣ Images table",
     description="👉 Click on table row to preview image",
     content=Container([click_info, table]),
 )
-labeled_image = sly.app.widgets.LabeledImage()
+labeled_image = LabeledImage()
 preview_card = Card(
     title="3️⃣ Image preview",
     description="👉 Click table cell to preview image with labels",
@@ -83,7 +83,7 @@ def calculate_stats():
 
 
 @chart.click
-def refresh_images_table(datapoint: sly.app.widgets.HeatmapChart.ClickedDataPoint):
+def refresh_images_table(datapoint: HeatmapChart.ClickedDataPoint):
     table.loading = True
     labeled_image.clean_up()
     df = stats.get_table_data(cls_name=datapoint.series_name, obj_count=datapoint.x)
@@ -93,7 +93,7 @@ def refresh_images_table(datapoint: sly.app.widgets.HeatmapChart.ClickedDataPoin
 
 
 @table.click
-def show_image(datapoint: sly.app.widgets.Table.ClickedDataPoint):
+def show_image(datapoint: Table.ClickedDataPoint):
     if datapoint.button_name is None:
         return
     labeled_image.loading = True
