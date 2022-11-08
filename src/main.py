@@ -5,7 +5,6 @@ from supervisely.app.widgets import (
     Container,
     Card,
     Button,
-    Text,
     Progress,
     ProjectThumbnail,
     HeatmapChart,
