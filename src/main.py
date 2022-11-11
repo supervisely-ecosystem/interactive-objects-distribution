@@ -55,7 +55,7 @@ preview_card = Card(
     title="3️⃣ Image preview",
     description="👉 Click table cell to preview image with labels",
     content=labeled_image,
-    slot_content=copy_btn,
+    content_top_right=copy_btn,
 )
 
 img_layout = Container(
