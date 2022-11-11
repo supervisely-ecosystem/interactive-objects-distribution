@@ -126,12 +126,10 @@ def copy_to_new_project():
 
     new_dataset = api.dataset.get_or_create(new_project.id, src_dataset.name)
     if api.image.get_info_by_name(new_dataset.id, src_image.name) is not None:
-        raise sly.app.DialogWindowMessage(
+        raise sly.app.DialogWindowError(
             title="Image exists in new dataset",
             description="Image was already copied to the new dataset. Operation is skipped.",
         )
 
-    api.image.copy(new_dataset.id, labeled_image.id, with_annotations=True)
-    raise sly.app.DialogWindowMessage(
-        title="Copy operation", description="Image has been successfully copied to the new project"
-    )
+    res_image = api.image.copy(new_dataset.id, labeled_image.id, with_annotations=True)
+    print(f"Image has been successfully copied (id={res_image.id}) to the new dataset")
