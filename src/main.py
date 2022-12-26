@@ -4,6 +4,7 @@ import supervisely as sly
 from supervisely.app.widgets import Container, Card, Button, Progress, LabeledImage, Table
 from supervisely.app.widgets import ProjectThumbnail, HeatmapChart, NotificationBox
 import src.stats as stats
+#import stats as stats
 
 # for convenient debug, has no effect in production
 load_dotenv("local.env")
@@ -55,15 +56,17 @@ preview_card = Card(
     title="3️⃣ Image preview",
     description="👉 Click table cell to preview image with labels",
     content=labeled_image,
-    content_top_right=copy_btn,
 )
+
+#content_top_right=copy_btn,
+
 
 img_layout = Container(
     widgets=[table_card, preview_card], direction="horizontal", gap=15, fractions=[1, 1]
 )
 
 app = sly.Application(
-    layout=Container(widgets=[input_card, heatmap_card, img_layout], direction="vertical", gap=15)
+    layout=Container(widgets=[input_card, heatmap_card, img_layout,copy_btn], direction="vertical", gap=15)
 )
 
 
@@ -126,12 +129,10 @@ def copy_to_new_project():
 
     new_dataset = api.dataset.get_or_create(new_project.id, src_dataset.name)
     if api.image.get_info_by_name(new_dataset.id, src_image.name) is not None:
-        raise sly.app.DialogWindowMessage(
+        raise sly.app.DialogWindowError(
             title="Image exists in new dataset",
             description="Image was already copied to the new dataset. Operation is skipped.",
         )
 
-    api.image.copy(new_dataset.id, labeled_image.id, with_annotations=True)
-    raise sly.app.DialogWindowMessage(
-        title="Copy operation", description="Image has been successfully copied to the new project"
-    )
+    res = api.image.copy(new_dataset.id, labeled_image.id, with_annotations=True)
+    print(f"Image has been successfully copied (id={res.id}) to the new project")
