@@ -4,7 +4,6 @@ import supervisely as sly
 from supervisely.app.widgets import Container, Card, Button, Progress, LabeledImage, Table
 from supervisely.app.widgets import ProjectThumbnail, HeatmapChart, NotificationBox
 import src.stats as stats
-#import stats as stats
 
 # for convenient debug, has no effect in production
 load_dotenv("local.env")
