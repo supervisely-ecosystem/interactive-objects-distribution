@@ -1,4 +1,4 @@
-supervisely==6.68.67
+supervisely==6.68.69
 
 # code formatter
 black
