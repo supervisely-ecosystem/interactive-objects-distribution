@@ -49,8 +49,6 @@ table_card = Card(
     content=Container([click_info, table]),
 )
 labeled_image = LabeledImage()
-copy_btn = Button("Copy to new project")
-copy_btn.hide()
 new_project = None
 preview_card = Card(
     title="3️⃣ Image preview",
@@ -58,15 +56,15 @@ preview_card = Card(
     content=labeled_image,
 )
 
-#content_top_right=copy_btn,
-
+copy_btn = Button(text="Copy Image")
+copy_btn.hide()
 
 img_layout = Container(
     widgets=[table_card, preview_card], direction="horizontal", gap=15, fractions=[1, 1]
 )
 
 app = sly.Application(
-    layout=Container(widgets=[input_card, heatmap_card, img_layout,copy_btn], direction="vertical", gap=15)
+    layout=Container(widgets=[input_card, heatmap_card, img_layout, copy_btn], direction="vertical", gap=15)
 )
 
 
@@ -92,9 +90,9 @@ def calculate_stats():
 
 @chart.click
 def refresh_images_table(datapoint: HeatmapChart.ClickedDataPoint):
+    copy_btn.hide()
     table.loading = True
     labeled_image.clean_up()
-    copy_btn.hide()
     df = stats.get_table_data(cls_name=datapoint.series_name, obj_count=datapoint.x)
     table.read_pandas(df)
     click_info.description = f"Images with {datapoint.x} object(s) of class {datapoint.series_name}"
@@ -114,25 +112,28 @@ def show_image(datapoint: Table.ClickedDataPoint):
     labeled_image.loading = False
     copy_btn.show()
 
-
 @copy_btn.click
 def copy_to_new_project():
-    global new_project
-    if new_project is None:
-        new_project = api.project.get_or_create(
-            project.workspace_id, project.name + " (manually sampled by yy)"
-        )
-        api.project.update_meta(new_project.id, meta)
+   global new_project
+   if new_project is None:
+       new_project = api.project.get_or_create(
+           project.workspace_id, project.name + " (manually sampled)"
+       )
+       api.project.update_meta(new_project.id, meta)
+ 
+   src_image = api.image.get_info_by_id(labeled_image.id)
+   src_dataset = api.dataset.get_info_by_id(src_image.dataset_id)
+ 
+   new_dataset = api.dataset.get_or_create(new_project.id, src_dataset.name)
+   if api.image.get_info_by_name(new_dataset.id, src_image.name) is not None:
+       raise sly.app.DialogWindowError(
+           title="Image exists in new dataset",
+           description="Image was already copied to the new dataset. Operation is skipped.",
+       )
+ 
+   res = api.image.copy(new_dataset.id, labeled_image.id, with_annotations=True)
+   print(f"Image has been successfully copied (id={res.id}) to the new project")
+    
 
-    src_image = api.image.get_info_by_id(labeled_image.id)
-    src_dataset = api.dataset.get_info_by_id(src_image.dataset_id)
 
-    new_dataset = api.dataset.get_or_create(new_project.id, src_dataset.name)
-    if api.image.get_info_by_name(new_dataset.id, src_image.name) is not None:
-        raise sly.app.DialogWindowError(
-            title="Image exists in new dataset",
-            description="Image was already copied to the new dataset. Operation is skipped.",
-        )
 
-    res = api.image.copy(new_dataset.id, labeled_image.id, with_annotations=True)
-    print(f"Image has been successfully copied (id={res.id}) to the new project")
