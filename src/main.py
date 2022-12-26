@@ -55,12 +55,14 @@ preview_card = Card(
     content=labeled_image,
 )
 
+copy_btn = Button(text="Copy Image")
+copy_btn.hide()
 img_layout = Container(
     widgets=[table_card, preview_card], direction="horizontal", gap=15, fractions=[1, 1]
 )
 
 app = sly.Application(
-    layout=Container(widgets=[input_card, heatmap_card, img_layout], direction="vertical", gap=15)
+    layout=Container(widgets=[input_card, heatmap_card, img_layout, copy_btn], direction="vertical", gap=15)
 )
 
 
@@ -86,6 +88,7 @@ def calculate_stats():
 
 @chart.click
 def refresh_images_table(datapoint: HeatmapChart.ClickedDataPoint):
+    copy_btn.hide()
     table.loading = True
     labeled_image.clean_up()
     df = stats.get_table_data(cls_name=datapoint.series_name, obj_count=datapoint.x)
@@ -105,3 +108,22 @@ def show_image(datapoint: Table.ClickedDataPoint):
     ann = sly.Annotation.from_json(ann_json, meta)
     labeled_image.set(title=image.name, image_url=image.preview_url, ann=ann, image_id=image_id)
     labeled_image.loading = False
+    copy_btn.show()
+
+@copy_btn.click
+def copy_to_new_project():
+  global new_project
+  if new_project is None:
+      new_project = api.project.get_or_create(
+          project.workspace_id, project.name + " (manually sampled)"
+      )
+      api.project.update_meta(new_project.id, meta)
+  src_image = api.image.get_info_by_id(labeled_image.id)
+  new_dataset = api.dataset.get_or_create(new_project.id, 'dataset 1')
+  if api.image.get_info_by_name(new_dataset.id, src_image.name) is not None:
+      raise sly.app.DialogWindowError(
+          title="Image exists in new dataset",
+          description="Image was already copied to the new dataset. Operation is skipped.",
+      )
+  res = api.image.copy(new_dataset.id, labeled_image.id, with_annotations=True)
+  print(f"Image has been successfully copied (id={res.id}) to the new project")
