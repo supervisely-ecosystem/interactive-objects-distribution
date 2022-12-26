@@ -120,7 +120,7 @@ def copy_to_new_project():
     global new_project
     if new_project is None:
         new_project = api.project.get_or_create(
-            project.workspace_id, project.name + " (manually sampled)"
+            project.workspace_id, project.name + " (manually sampled by yy)"
         )
         api.project.update_meta(new_project.id, meta)
 
