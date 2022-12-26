@@ -122,9 +122,9 @@ def copy_to_new_project():
        api.project.update_meta(new_project.id, meta)
  
    src_image = api.image.get_info_by_id(labeled_image.id)
-   src_dataset = api.dataset.get_info_by_id(src_image.dataset_id)
+   #src_dataset = api.dataset.get_info_by_id(src_image.dataset_id)
  
-   new_dataset = api.dataset.get_or_create(new_project.id, src_dataset.name)
+   new_dataset = api.dataset.get_or_create(new_project.id, 'dataset 1')
    if api.image.get_info_by_name(new_dataset.id, src_image.name) is not None:
        raise sly.app.DialogWindowError(
            title="Image exists in new dataset",
