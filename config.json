@@ -1,23 +1,25 @@
 {
-  "type": "app",
-  "version": "2.0.0",
-  "name": "Interactive objects distribution",
-  "description": "Explore images with certain number of objects of specific class",
-  "categories": [
-    "images",
-    "visualization",
-    "exploration",
-    "statistics",
-    "visualization stats"
-  ],
-  "docker_image": "supervisely/base-py-sdk:6.72.55",
-  "icon": "https://user-images.githubusercontent.com/12828725/183916661-224ff8cb-a3d1-4b82-a629-def8c6de1db5.png",
-  "poster": "https://user-images.githubusercontent.com/106374579/187223426-ec7e0fae-8ba9-48fd-b71f-8680cc0f1b49.png",
-  "entrypoint": "python -m uvicorn src.main:app --host 0.0.0.0 --port 8000",
-  "port": 8000,
-  "context_menu": {
-    "target": ["images_project"],
-    "context_root": "Report"
-  },
-  "min_instance_version": "6.5.22"
+    "type": "app",
+    "version": "2.0.0",
+    "name": "Interactive objects distribution",
+    "description": "Explore images with certain number of objects of specific class",
+    "categories": [
+        "images",
+        "visualization",
+        "exploration",
+        "statistics",
+        "visualization stats"
+    ],
+    "docker_image": "supervisely/visualization-stats:0.0.1",
+    "icon": "https://user-images.githubusercontent.com/12828725/183916661-224ff8cb-a3d1-4b82-a629-def8c6de1db5.png",
+    "poster": "https://user-images.githubusercontent.com/106374579/187223426-ec7e0fae-8ba9-48fd-b71f-8680cc0f1b49.png",
+    "entrypoint": "python -m uvicorn src.main:app --host 0.0.0.0 --port 8000",
+    "port": 8000,
+    "context_menu": {
+        "target": [
+            "images_project"
+        ],
+        "context_root": "Report"
+    },
+    "min_instance_version": "6.5.22"
 }
